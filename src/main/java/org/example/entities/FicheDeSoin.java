@@ -1,14 +1,13 @@
 package org.example.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class FicheDeSoin {
+@Inheritance( strategy = InheritanceType.SINGLE_TABLE )
+@DiscriminatorColumn( name="discriminator", discriminatorType = DiscriminatorType.INTEGER )
+public abstract class FicheDeSoin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

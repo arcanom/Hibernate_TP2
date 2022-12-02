@@ -44,4 +44,15 @@ public class DossierMedical {
     @OneToOne(mappedBy = "dossierMedical")
     private  Patient patient;
 
+    @Override
+    public String toString() {
+        return "DossierMedical{" +
+                "numero=" + numero +
+                ", dateCreation=" + dateCreation +
+                ", codeAccessPatient='" + codeAccessPatient + '\'' +
+                ", patient=" + patient +
+                '}';
+    }
 }
+
+
