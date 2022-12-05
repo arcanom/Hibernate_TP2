@@ -2,6 +2,9 @@ package org.example.entities;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class DossierMedical {
@@ -44,6 +47,9 @@ public class DossierMedical {
     @OneToOne(mappedBy = "dossierMedical")
     private  Patient patient;
 
+    @ManyToMany(mappedBy = "fiches")
+    Set<FicheDeSoin> ficheDeSoins = new HashSet<>();
+
     @Override
     public String toString() {
         return "DossierMedical{" +
@@ -52,6 +58,19 @@ public class DossierMedical {
                 ", codeAccessPatient='" + codeAccessPatient + '\'' +
                 ", patient=" + patient +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DossierMedical that = (DossierMedical) o;
+        return numero == that.numero && Objects.equals(dateCreation, that.dateCreation) && Objects.equals(codeAccessPatient, that.codeAccessPatient) && Objects.equals(patient, that.patient) && Objects.equals(ficheDeSoins, that.ficheDeSoins);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numero, dateCreation, codeAccessPatient, patient, ficheDeSoins);
     }
 }
 

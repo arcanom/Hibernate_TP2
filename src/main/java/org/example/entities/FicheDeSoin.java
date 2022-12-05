@@ -2,7 +2,11 @@ package org.example.entities;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Inheritance( strategy = InheritanceType.SINGLE_TABLE )
@@ -52,5 +56,33 @@ public abstract class FicheDeSoin {
 
     public void setAddresseCreateur(String addresseCreateur) {
         this.addresseCreateur = addresseCreateur;
+    }
+    @ManyToMany
+    @JoinTable(name="fiches",joinColumns = @JoinColumn(name="fds_id"),inverseJoinColumns=@JoinColumn(name="dm_id"))
+    Set<DossierMedical> fiches = new HashSet<>();
+
+    private  void ajouterFiches(DossierMedical dm){
+        this.fiches.add(dm);
+    }
+
+    @ManyToOne
+    @JoinColumn(name="fichespayes")
+    private FicheDeSoin fichespayes;
+
+    @OneToMany(mappedBy ="fichespayes")
+    private Set<FicheDeSoin> ficheDeSoins = new HashSet<>();
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FicheDeSoin that = (FicheDeSoin) o;
+        return numeroFiche == that.numeroFiche && Objects.equals(dateCreation, that.dateCreation) && Objects.equals(agentCreateur, that.agentCreateur) && Objects.equals(addresseCreateur, that.addresseCreateur) && Objects.equals(fiches, that.fiches);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numeroFiche, dateCreation, agentCreateur, addresseCreateur, fiches);
     }
 }

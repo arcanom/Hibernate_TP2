@@ -1,9 +1,6 @@
 package org.example.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Prescription {
@@ -51,4 +48,8 @@ public class Prescription {
 
     public Prescription() {
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="fc_id")
+    private FicheConsultation prescription;
 }

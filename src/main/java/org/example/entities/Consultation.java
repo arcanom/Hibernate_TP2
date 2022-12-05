@@ -1,9 +1,6 @@
 package org.example.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -64,4 +61,8 @@ public class Consultation {
 
     public Consultation() {
     }
+
+    @OneToOne
+    @JoinColumn(name = "fc_id")
+    private FicheConsultation  origineFiche;
 }

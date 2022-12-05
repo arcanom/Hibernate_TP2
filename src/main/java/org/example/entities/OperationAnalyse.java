@@ -1,10 +1,9 @@
 package org.example.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class OperationAnalyse {
@@ -51,6 +50,22 @@ public class OperationAnalyse {
     }
 
     public OperationAnalyse() {
+    }
+
+    @ManyToMany
+    @JoinTable(name="analyses",joinColumns = @JoinColumn(name="oa_id"),inverseJoinColumns=@JoinColumn(name="fc_id"))
+    private Set<FicheConsultation> analyses = new HashSet<>();
+
+    public void ajouterFicheConsultation(FicheConsultation fc){
+        this.analyses.add(fc);
+    }
+
+    public Set<FicheConsultation> getAnalyses() {
+        return analyses;
+    }
+
+    public void setAnalyses(Set<FicheConsultation> analyses) {
+        this.analyses = analyses;
     }
 
 
